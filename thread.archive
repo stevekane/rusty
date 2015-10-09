@@ -1,0 +1,23 @@
+let (load_request_tx, load_request_rx) = mpsc::channel::<&Path>();
+let (load_response_tx, load_response_rx) = mpsc::channel::<Result<Resource, ResourceLoadError>>();
+
+thread::spawn(move || {
+    while let Ok(file_path) = load_request_rx.recv() {
+        let result = match load_resource(file_path) {
+            Ok(s)  => Ok(Resource::Shader { src: s }),
+            Err(r) => Err(r)
+        };
+
+        load_response_tx.send(result);
+    }
+    println!("Loading thread closed");
+});
+load_request_tx.send(Path::new("src/shaders/vertex.glsl"));
+load_request_tx.send(Path::new("src/shaders/fragment.glsl"));
+
+match load_response_rx.try_recv() {
+    Ok(Ok(val))     => println!("{:?}", val),
+    Ok(Err(reason)) => println!("{:?}", reason),
+    _               => ()
+}
+

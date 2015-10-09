@@ -1,0 +1,13 @@
+[package]
+name = "rusty"
+version = "0.1.0"
+authors = ["Steve Kane <kanesteven@gmail.com>"]
+
+[dependencies.glium]
+version = "*"
+features = ["image", "cgmath"]
+
+[dependencies]
+cgmath = "0.2.0"
+image = "*"
+time = "*"
