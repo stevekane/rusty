@@ -98,13 +98,13 @@ fn main() {
             _                => panic!("We failed some how to find either the vertex or fragment source")
         };
         let tex_diffuse = {
-            match load_image(Path::new("assets/wall-diffuse.jpg")) {
+            match load_image(Path::new("assets/images/wall-diffuse.jpg")) {
                 Ok(img) => SrgbTexture2d::new(&app.renderer.display, img).ok(),
                 Err(e)  => None
             }
         };
         let tex_normal = {
-            match load_image(Path::new("assets/wall-normal.png")) {
+            match load_image(Path::new("assets/images/wall-normal.png")) {
                 Ok(img) => Texture2d::new(&app.renderer.display, img).ok(),
                 Err(e)  => None
             }
